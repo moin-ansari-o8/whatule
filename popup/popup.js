@@ -1,4 +1,4 @@
-const $ = (selector) => document.querySelector(selector);
+const qs = (selector) => document.querySelector(selector);
 
 const state = {
   queue: [],
@@ -19,7 +19,7 @@ function formatTime(value) {
 }
 
 function renderQueue() {
-  const list = $("#queue");
+  const list = qs("#queue");
   list.innerHTML = "";
   if (!state.queue.length) {
     const empty = document.createElement("li");
@@ -57,7 +57,7 @@ async function loadQueue() {
 
 async function handleSchedule(event, immediate = false) {
   event?.preventDefault();
-  const form = $("#schedule-form");
+  const form = qs("#schedule-form");
   const data = new FormData(form);
   const payload = {
     contact: data.get("contact"),
@@ -68,7 +68,7 @@ async function handleSchedule(event, immediate = false) {
   };
 
   if (!payload.contact || !payload.message || !payload.scheduledTime) {
-    alert("Please complete contact, message, and time.");
+    alert("Please fill in all required fields: contact, message, and schedule time.");
     return;
   }
 
@@ -79,9 +79,9 @@ async function handleSchedule(event, immediate = false) {
 
 async function handleAiGenerate(event) {
   event.preventDefault();
-  const form = $("#ai-form");
+  const form = qs("#ai-form");
   const data = new FormData(form);
-  const aiStatus = $("#ai-status");
+  const aiStatus = qs("#ai-status");
   aiStatus.textContent = "Drafting with AI…";
   const response = await sendMessage({
     type: "AI_GENERATE",
@@ -94,26 +94,26 @@ async function handleAiGenerate(event) {
   state.draft = response?.text ?? "";
   aiStatus.textContent = response?.text ? "Draft ready" : "Unable to draft";
   if (state.draft) {
-    $("#ai-preview").hidden = false;
-    $("#ai-preview-text").textContent = state.draft;
+    qs("#ai-preview").hidden = false;
+    qs("#ai-preview-text").textContent = state.draft;
   }
 }
 
 function wireEvents() {
-  $("#schedule-form")?.addEventListener("submit", (e) => handleSchedule(e, false));
-  $("#schedule-now")?.addEventListener("click", (e) => handleSchedule(e, true));
-  $("#ai-form")?.addEventListener("submit", handleAiGenerate);
-  $("#refresh")?.addEventListener("click", loadQueue);
-  $("#use-draft")?.addEventListener("click", () => {
+  qs("#schedule-form")?.addEventListener("submit", (e) => handleSchedule(e, false));
+  qs("#schedule-now")?.addEventListener("click", (e) => handleSchedule(e, true));
+  qs("#ai-form")?.addEventListener("submit", handleAiGenerate);
+  qs("#refresh")?.addEventListener("click", loadQueue);
+  qs("#use-draft")?.addEventListener("click", () => {
     if (!state.draft) return;
-    $("#schedule-form textarea[name='message']").value = state.draft;
-    $("#ai-preview").hidden = true;
+    qs("#schedule-form textarea[name='message']").value = state.draft;
+    qs("#ai-preview").hidden = true;
   });
-  $("#dismiss-draft")?.addEventListener("click", () => {
+  qs("#dismiss-draft")?.addEventListener("click", () => {
     state.draft = null;
-    $("#ai-preview").hidden = true;
+    qs("#ai-preview").hidden = true;
   });
-  $("#open-dashboard")?.addEventListener("click", () => {
+  qs("#open-dashboard")?.addEventListener("click", () => {
     if (chrome?.runtime?.openOptionsPage) {
       chrome.runtime.openOptionsPage();
     } else {

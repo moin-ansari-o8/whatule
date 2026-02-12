@@ -1,4 +1,4 @@
-const $$ = (selector) => document.querySelector(selector);
+const qs = (selector) => document.querySelector(selector);
 const state = {
   messages: [],
   draft: null,
@@ -30,13 +30,13 @@ function renderStats() {
   const queued = state.messages.filter((m) => m.status === "scheduled").length;
   const sent = state.messages.filter((m) => m.status === "sent").length;
   const drafts = state.draft ? 1 : 0;
-  $$("#stat-queued").textContent = queued;
-  $$("#stat-sent").textContent = sent;
-  $$("#stat-ai").textContent = drafts;
+  qs("#stat-queued").textContent = queued;
+  qs("#stat-sent").textContent = sent;
+  qs("#stat-ai").textContent = drafts;
 }
 
 function renderHomeQueue() {
-  const list = $$("#home-queue");
+  const list = qs("#home-queue");
   list.innerHTML = "";
   if (!state.messages.length) {
     const li = document.createElement("li");
@@ -67,7 +67,7 @@ function renderHomeQueue() {
 }
 
 function renderScheduleTable() {
-  const body = $$("#schedule-table tbody");
+  const body = qs("#schedule-table tbody");
   body.innerHTML = "";
   state.messages
     .slice()
@@ -92,16 +92,16 @@ async function hydrate() {
   renderHomeQueue();
   renderScheduleTable();
   if (state.settings) {
-    $$("#setting-delay").value = state.settings.sendDelay ?? 10;
-    $$("#setting-provider").value = state.settings.provider ?? "openai";
+    qs("#setting-delay").value = state.settings.sendDelay ?? 10;
+    qs("#setting-provider").value = state.settings.provider ?? "openai";
   }
 }
 
 async function generateDraft(event) {
   event.preventDefault();
-  const form = $$("#ai-draft-form");
+  const form = qs("#ai-draft-form");
   const data = new FormData(form);
-  $$("#ai-draft-status").textContent = "Generating…";
+  qs("#ai-draft-status").textContent = "Generating…";
   const response = await sendMessage({
     type: "AI_GENERATE",
     payload: {
@@ -111,23 +111,23 @@ async function generateDraft(event) {
     },
   });
   state.draft = response?.text ?? "";
-  $$("#ai-draft-status").textContent = state.draft ? "Draft ready" : "Draft unavailable";
+  qs("#ai-draft-status").textContent = state.draft ? "Draft ready" : "Draft unavailable";
   if (state.draft) {
-    $$("#ai-draft-preview").hidden = false;
-    $$("#ai-draft-text").textContent = state.draft;
+    qs("#ai-draft-preview").hidden = false;
+    qs("#ai-draft-text").textContent = state.draft;
   }
   renderStats();
 }
 
 async function saveSettings() {
   const settings = {
-    sendDelay: Number($$("#setting-delay").value) || 0,
-    provider: $$("#setting-provider").value,
+    sendDelay: Number(qs("#setting-delay").value) || 0,
+    provider: qs("#setting-provider").value,
   };
   state.settings = settings;
   await sendMessage({ type: "SAVE_SETTINGS", payload: settings });
-  $$("#settings-status").textContent = "Saved";
-  setTimeout(() => ($$("#settings-status").textContent = ""), 2000);
+  qs("#settings-status").textContent = "Saved";
+  setTimeout(() => (qs("#settings-status").textContent = ""), 2000);
 }
 
 function wireNav() {
@@ -137,21 +137,21 @@ function wireNav() {
 }
 
 function wireActions() {
-  $$("#ai-draft-form")?.addEventListener("submit", generateDraft);
-  $$("#draft-use")?.addEventListener("click", () => {
+  qs("#ai-draft-form")?.addEventListener("submit", generateDraft);
+  qs("#draft-use")?.addEventListener("click", () => {
     alert("Draft applied. Use the popup to schedule with this content.");
   });
-  $$("#draft-dismiss")?.addEventListener("click", () => {
+  qs("#draft-dismiss")?.addEventListener("click", () => {
     state.draft = null;
-    $$("#ai-draft-preview").hidden = true;
+    qs("#ai-draft-preview").hidden = true;
     renderStats();
   });
-  $$("#refresh-home")?.addEventListener("click", hydrate);
-  $$("#refresh-schedule")?.addEventListener("click", hydrate);
-  $$("#save-settings")?.addEventListener("click", saveSettings);
-  $$("#new-quick")?.addEventListener("click", () => switchSection("schedule"));
-  $$("#new-ai")?.addEventListener("click", () => switchSection("ai"));
-  $$("#sync-now")?.addEventListener("click", hydrate);
+  qs("#refresh-home")?.addEventListener("click", hydrate);
+  qs("#refresh-schedule")?.addEventListener("click", hydrate);
+  qs("#save-settings")?.addEventListener("click", saveSettings);
+  qs("#new-quick")?.addEventListener("click", () => switchSection("schedule"));
+  qs("#new-ai")?.addEventListener("click", () => switchSection("ai"));
+  qs("#sync-now")?.addEventListener("click", hydrate);
 }
 
 document.addEventListener("DOMContentLoaded", async () => {

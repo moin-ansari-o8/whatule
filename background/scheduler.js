@@ -9,7 +9,7 @@ function buildMessage(payload) {
   const id = payload.id || uid("msg");
   const [contactPhone, contactName] =
     payload.contact && payload.contact.startsWith("+")
-      ? [payload.contact, payload.contact]
+      ? [payload.contact, null]
       : [null, payload.contact];
 
   return {
