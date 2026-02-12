@@ -4,7 +4,7 @@
 
   function findChatInput() {
     // WhatsApp Web uses data-tab indexes for the composer; value may change over time.
-    // This selector targets the main message input; review regularly for upstream DOM changes.
+    // This selector targets the main message input; review regularly for upstream DOM changes and update if these indices shift.
     return (
       document.querySelector(`[data-tab='${TAB_PRIMARY_INPUT}'] div[contenteditable='true']`) ||
       document.querySelector(`[data-tab='${TAB_ALT_INPUT}'] div[contenteditable='true']`) ||

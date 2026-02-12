@@ -8,7 +8,7 @@ function buildMessage(payload) {
   const time = payload.immediate ? now : new Date(payload.scheduledTime || now);
   const id = payload.id || uid("msg");
   // Basic heuristic for phone-like input; replace with robust parser for production.
-  const isLikelyPhone = typeof payload.contact === "string" && /^\+\d[\d\s()-]{6,}$/.test(payload.contact);
+  const isLikelyPhone = typeof payload.contact === "string" && /^\+\d[\d\s()-]{8,}$/.test(payload.contact);
   const [contactPhone, contactName] = isLikelyPhone ? [payload.contact, null] : [null, payload.contact];
 
   return {

@@ -13,6 +13,7 @@ const lengthMap = {
 
 /**
  * Placeholder draft generator; returns a formatted prompt string rather than invoking an AI API.
+ * Replace with real provider-backed generation before production use.
  */
 export async function generateDraft({ prompt, tone = "friendly", length = "short" }) {
   const safePrompt = prompt?.trim();
