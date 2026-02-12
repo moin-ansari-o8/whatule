@@ -17,5 +17,5 @@ export async function generateDraft({ prompt, tone = "friendly", length = "short
   const intro = toneMap[tone] || toneMap.friendly;
   const sizing = lengthMap[length] || lengthMap.short;
   // Placeholder generation: this formats a prompt but does not call an external AI provider.
-  return `${intro} message: ${safePrompt}. Please ${sizing}, stay empathetic, and keep it WhatsApp-ready.`;
+  return `[PLACEHOLDER] ${intro} message: ${safePrompt}. Please ${sizing}, stay empathetic, and keep it WhatsApp-ready.`;
 }

@@ -35,16 +35,30 @@ function renderQueue() {
     .forEach((item) => {
       const li = document.createElement("li");
       li.className = "list__item";
-      li.innerHTML = `
-        <header>
-          <div>
-            <strong>${item.contactName || item.contactPhone || "Unknown contact"}</strong>
-            <div class="list__meta">${formatTime(item.scheduledTime)} · ${item.priority ?? "normal"}</div>
-          </div>
-          <span class="status status--${item.status ?? "scheduled"}">${item.status ?? "scheduled"}</span>
-        </header>
-        <p>${item.message}</p>
-      `;
+
+      const header = document.createElement("header");
+      const left = document.createElement("div");
+      const name = document.createElement("strong");
+      name.textContent = item.contactName || item.contactPhone || "Unknown contact";
+      const meta = document.createElement("div");
+      meta.className = "list__meta";
+      meta.textContent = `${formatTime(item.scheduledTime)} · ${item.priority ?? "normal"}`;
+      left.appendChild(name);
+      left.appendChild(meta);
+
+      const status = document.createElement("span");
+      const statusClass = item.status ?? "scheduled";
+      status.className = `status status--${statusClass}`;
+      status.textContent = statusClass;
+
+      header.appendChild(left);
+      header.appendChild(status);
+
+      const body = document.createElement("p");
+      body.textContent = item.message;
+
+      li.appendChild(header);
+      li.appendChild(body);
       list.appendChild(li);
     });
 }

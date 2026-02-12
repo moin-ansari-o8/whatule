@@ -7,7 +7,7 @@ function buildMessage(payload) {
   const now = new Date();
   const time = payload.immediate ? now : new Date(payload.scheduledTime || now);
   const id = payload.id || uid("msg");
-  const isLikelyPhone = typeof payload.contact === "string" && /^\+\d[\d\s()-]*$/.test(payload.contact);
+  const isLikelyPhone = typeof payload.contact === "string" && /^\+\d[\d\s()-]{6,}$/.test(payload.contact);
   const [contactPhone, contactName] = isLikelyPhone ? [payload.contact, null] : [null, payload.contact];
 
   return {

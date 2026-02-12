@@ -52,16 +52,35 @@ function renderHomeQueue() {
     .forEach((msg) => {
       const li = document.createElement("li");
       li.className = "list__item";
-      li.innerHTML = `
-        <div style="display:flex;justify-content:space-between;align-items:center;">
-          <div>
-            <strong>${msg.contactName || msg.contactPhone || "Contact"}</strong>
-            <p class="muted">${formatTime(msg.scheduledTime)}</p>
-          </div>
-          <span class="status status--${msg.status ?? "scheduled"}">${msg.status ?? "scheduled"}</span>
-        </div>
-        <p class="muted">${msg.message}</p>
-      `;
+
+      const row = document.createElement("div");
+      row.style.display = "flex";
+      row.style.justifyContent = "space-between";
+      row.style.alignItems = "center";
+
+      const left = document.createElement("div");
+      const name = document.createElement("strong");
+      name.textContent = msg.contactName || msg.contactPhone || "Contact";
+      const time = document.createElement("p");
+      time.className = "muted";
+      time.textContent = formatTime(msg.scheduledTime);
+      left.appendChild(name);
+      left.appendChild(time);
+
+      const status = document.createElement("span");
+      const statusClass = msg.status ?? "scheduled";
+      status.className = `status status--${statusClass}`;
+      status.textContent = statusClass;
+
+      row.appendChild(left);
+      row.appendChild(status);
+
+      const body = document.createElement("p");
+      body.className = "muted";
+      body.textContent = msg.message;
+
+      li.appendChild(row);
+      li.appendChild(body);
       list.appendChild(li);
     });
 }
@@ -74,12 +93,22 @@ function renderScheduleTable() {
     .sort((a, b) => new Date(a.scheduledTime) - new Date(b.scheduledTime))
     .forEach((msg) => {
       const tr = document.createElement("tr");
-      tr.innerHTML = `
-        <td>${msg.contactName || msg.contactPhone || "Contact"}</td>
-        <td>${msg.message}</td>
-        <td>${formatTime(msg.scheduledTime)}</td>
-        <td><span class="status status--${msg.status ?? "scheduled"}">${msg.status ?? "scheduled"}</span></td>
-      `;
+      const tdContact = document.createElement("td");
+      tdContact.textContent = msg.contactName || msg.contactPhone || "Contact";
+      const tdMessage = document.createElement("td");
+      tdMessage.textContent = msg.message;
+      const tdTime = document.createElement("td");
+      tdTime.textContent = formatTime(msg.scheduledTime);
+      const tdStatus = document.createElement("td");
+      const statusClass = msg.status ?? "scheduled";
+      const status = document.createElement("span");
+      status.className = `status status--${statusClass}`;
+      status.textContent = statusClass;
+      tdStatus.appendChild(status);
+      tr.appendChild(tdContact);
+      tr.appendChild(tdMessage);
+      tr.appendChild(tdTime);
+      tr.appendChild(tdStatus);
       body.appendChild(tr);
     });
 }
