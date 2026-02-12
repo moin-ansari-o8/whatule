@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WhatuLe Dashboard</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="layout">
+      <aside class="sidebar">
+        <div class="sidebar__brand">
+          <div class="sidebar__logo">W</div>
+          <div>
+            <p class="sidebar__name">WhatuLe</p>
+            <p class="sidebar__muted">Premium Scheduler</p>
+          </div>
+        </div>
+        <nav class="nav">
+          <button class="nav__item active" data-section="home">Home</button>
+          <button class="nav__item" data-section="schedule">Schedule</button>
+          <button class="nav__item" data-section="contacts">Contacts</button>
+          <button class="nav__item" data-section="templates">Templates</button>
+          <button class="nav__item" data-section="ai">AI Assistant</button>
+          <button class="nav__item" data-section="analytics">Analytics</button>
+          <button class="nav__item" data-section="settings">Settings</button>
+        </nav>
+        <div class="sidebar__footer">
+          <p class="sidebar__muted">Encrypted • Local-first</p>
+          <button id="sync-now" class="ghost">Sync now</button>
+        </div>
+      </aside>
+
+      <main class="content">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Control Center</p>
+            <h1>WhatsApp scheduling at a glance</h1>
+          </div>
+          <div class="topbar__actions">
+            <button class="ghost" id="new-quick">Quick schedule</button>
+            <button class="primary" id="new-ai">AI draft</button>
+          </div>
+        </header>
+
+        <section id="section-home" class="section active">
+          <div class="grid grid--3">
+            <div class="stat">
+              <p class="eyebrow">Queued</p>
+              <h2 id="stat-queued">0</h2>
+              <p class="muted">Messages scheduled</p>
+            </div>
+            <div class="stat">
+              <p class="eyebrow">Sent</p>
+              <h2 id="stat-sent">0</h2>
+              <p class="muted">Delivered today</p>
+            </div>
+            <div class="stat">
+              <p class="eyebrow">AI drafts</p>
+              <h2 id="stat-ai">0</h2>
+              <p class="muted">Ready to schedule</p>
+            </div>
+          </div>
+
+          <div class="grid grid--2">
+            <div class="panel">
+              <header class="panel__head">
+                <div>
+                  <p class="eyebrow">Live Queue</p>
+                  <h3>Upcoming messages</h3>
+                </div>
+                <button class="ghost" id="refresh-home">Refresh</button>
+              </header>
+              <ul id="home-queue" class="list"></ul>
+            </div>
+
+            <div class="panel">
+              <header class="panel__head">
+                <div>
+                  <p class="eyebrow">AI Assistant</p>
+                  <h3>Generate a draft</h3>
+                </div>
+              </header>
+              <form id="ai-draft-form" class="form">
+                <label class="field">
+                  <span>Prompt</span>
+                  <input name="prompt" required placeholder="E.g. Follow up with Sarah about the proposal" />
+                </label>
+                <div class="row">
+                  <label class="field">
+                    <span>Tone</span>
+                    <select name="tone">
+                      <option value="friendly">Friendly</option>
+                      <option value="professional" selected>Professional</option>
+                      <option value="casual">Casual</option>
+                      <option value="formal">Formal</option>
+                    </select>
+                  </label>
+                  <label class="field">
+                    <span>Length</span>
+                    <select name="length">
+                      <option value="short">Short</option>
+                      <option value="medium" selected>Medium</option>
+                      <option value="long">Long</option>
+                    </select>
+                  </label>
+                </div>
+                <div class="actions">
+                  <button class="primary" type="submit">Generate</button>
+                  <p class="muted" id="ai-draft-status"></p>
+                </div>
+              </form>
+              <div id="ai-draft-preview" class="preview" hidden>
+                <div class="preview__bar">
+                  <p>Draft</p>
+                  <div class="preview__controls">
+                    <button class="ghost" id="draft-use">Use</button>
+                    <button class="ghost" id="draft-dismiss">Dismiss</button>
+                  </div>
+                </div>
+                <p id="ai-draft-text"></p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="section-schedule" class="section">
+          <header class="panel__head">
+            <div>
+              <p class="eyebrow">Schedule</p>
+              <h3>All planned messages</h3>
+            </div>
+            <button class="ghost" id="refresh-schedule">Refresh</button>
+          </header>
+          <table class="table" id="schedule-table">
+            <thead>
+              <tr>
+                <th>Contact</th>
+                <th>Message</th>
+                <th>Time</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </section>
+
+        <section id="section-contacts" class="section">
+          <header class="panel__head">
+            <div>
+              <p class="eyebrow">Contacts</p>
+              <h3>Favorites & tags</h3>
+            </div>
+          </header>
+          <div class="panel">
+            <p class="muted">Contact intelligence coming soon. Add contacts directly from WhatsApp conversations.</p>
+          </div>
+        </section>
+
+        <section id="section-templates" class="section">
+          <header class="panel__head">
+            <div>
+              <p class="eyebrow">Templates</p>
+              <h3>Save your best messages</h3>
+            </div>
+          </header>
+          <div class="panel">
+            <p class="muted">Create and reuse AI-enhanced templates for birthdays, follow-ups, and reminders.</p>
+          </div>
+        </section>
+
+        <section id="section-ai" class="section">
+          <header class="panel__head">
+            <div>
+              <p class="eyebrow">AI Assistant</p>
+              <h3>Conversational workspace</h3>
+            </div>
+          </header>
+          <div class="panel">
+            <p class="muted">Chat-style assistant with tone control, translation, and message scoring.</p>
+          </div>
+        </section>
+
+        <section id="section-analytics" class="section">
+          <header class="panel__head">
+            <div>
+              <p class="eyebrow">Analytics</p>
+              <h3>Delivery insights</h3>
+            </div>
+          </header>
+          <div class="grid grid--2">
+            <div class="panel">
+              <p class="muted">Visual delivery timelines, response rates, and engagement will appear here.</p>
+            </div>
+            <div class="panel">
+              <p class="muted">Export-ready reports for campaigns and client updates.</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="section-settings" class="section">
+          <header class="panel__head">
+            <div>
+              <p class="eyebrow">Settings</p>
+              <h3>Secure configuration</h3>
+            </div>
+          </header>
+          <div class="panel form">
+            <label class="field">
+              <span>Default send delay (seconds)</span>
+              <input id="setting-delay" type="number" min="0" value="10" />
+            </label>
+            <label class="field">
+              <span>AI Provider</span>
+              <select id="setting-provider">
+                <option value="openai">OpenAI</option>
+                <option value="gemini">Gemini</option>
+                <option value="claude">Claude</option>
+                <option value="ollama">Ollama</option>
+              </select>
+            </label>
+            <button class="primary" id="save-settings">Save preferences</button>
+            <p class="muted" id="settings-status"></p>
+          </div>
+        </section>
+      </main>
+    </div>
+    <script src="dashboard.js"></script>
+  </body>
+</html>

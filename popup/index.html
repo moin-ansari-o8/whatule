@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WhatuLe • Quick Schedule</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="popup">
+      <header class="brand">
+        <div class="brand__logo" aria-hidden="true">W</div>
+        <div>
+          <p class="brand__name">WhatuLe</p>
+          <p class="brand__tagline">WhatsApp Scheduler</p>
+        </div>
+        <button class="ghost-btn" id="open-dashboard" type="button">Open Dashboard</button>
+      </header>
+
+      <section class="card">
+        <div class="card__head">
+          <div>
+            <p class="eyebrow">Quick Schedule</p>
+            <h2>Send with confidence</h2>
+          </div>
+          <span class="pill pill--success">AI-ready</span>
+        </div>
+        <form id="schedule-form" class="form">
+          <label class="field">
+            <span>Contact or Group</span>
+            <input required name="contact" type="text" placeholder="e.g. Mom / +1 555 111 2222" />
+          </label>
+          <label class="field">
+            <span>Message</span>
+            <textarea required name="message" rows="3" placeholder="What would you like to say?"></textarea>
+          </label>
+          <div class="row">
+            <label class="field">
+              <span>Schedule</span>
+              <input required name="time" type="datetime-local" />
+            </label>
+            <label class="field">
+              <span>Priority</span>
+              <select name="priority">
+                <option value="normal" selected>Normal</option>
+                <option value="high">High</option>
+                <option value="low">Low</option>
+              </select>
+            </label>
+          </div>
+          <div class="actions">
+            <button class="primary" type="submit">Schedule</button>
+            <button class="secondary" type="button" id="schedule-now">Send Now</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="card">
+        <div class="card__head">
+          <div>
+            <p class="eyebrow">AI Quick Generate</p>
+            <h2>Context-smart drafts</h2>
+          </div>
+          <span class="pill pill--muted">Draft</span>
+        </div>
+        <form id="ai-form" class="form compact">
+          <label class="field">
+            <span>Prompt</span>
+            <input required name="prompt" type="text" placeholder="Wish Sarah a warm happy birthday tonight" />
+          </label>
+          <div class="row">
+            <label class="field">
+              <span>Tone</span>
+              <select name="tone">
+                <option value="friendly" selected>Friendly</option>
+                <option value="professional">Professional</option>
+                <option value="casual">Casual</option>
+                <option value="formal">Formal</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>Length</span>
+              <select name="length">
+                <option value="short" selected>Short</option>
+                <option value="medium">Medium</option>
+                <option value="long">Long</option>
+              </select>
+            </label>
+          </div>
+          <div class="actions">
+            <button class="primary" type="submit">Generate draft</button>
+            <p class="hint" id="ai-status"></p>
+          </div>
+        </form>
+        <div id="ai-preview" class="preview" hidden>
+          <div class="preview__bar">
+            <p>AI Draft</p>
+            <div class="preview__controls">
+              <button class="ghost-btn" id="use-draft">Use</button>
+              <button class="ghost-btn" id="dismiss-draft">Dismiss</button>
+            </div>
+          </div>
+          <p id="ai-preview-text"></p>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card__head">
+          <div>
+            <p class="eyebrow">Today's Messages</p>
+            <h2>Live queue</h2>
+          </div>
+          <button class="ghost-btn" id="refresh">Refresh</button>
+        </div>
+        <ul id="queue" class="list"></ul>
+      </section>
+    </div>
+    <script src="popup.js"></script>
+  </body>
+</html>

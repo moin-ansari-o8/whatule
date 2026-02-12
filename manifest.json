@@ -1,0 +1,52 @@
+{
+  "manifest_version": 3,
+  "name": "WhatuLe - WhatsApp Scheduler",
+  "short_name": "WhatuLe",
+  "description": "Premium WhatsApp Web scheduler with AI-assisted messaging and a refined WhatsApp-green UI.",
+  "version": "0.1.0",
+  "action": {
+    "default_title": "WhatuLe",
+    "default_popup": "popup/index.html",
+    "default_icon": {
+      "16": "assets/icons/icon-16.png",
+      "32": "assets/icons/icon-32.png",
+      "48": "assets/icons/icon-48.png",
+      "128": "assets/icons/icon-128.png"
+    }
+  },
+  "options_page": "dashboard/index.html",
+  "icons": {
+    "16": "assets/icons/icon-16.png",
+    "32": "assets/icons/icon-32.png",
+    "48": "assets/icons/icon-48.png",
+    "128": "assets/icons/icon-128.png"
+  },
+  "background": {
+    "service_worker": "background/service-worker.js",
+    "type": "module"
+  },
+  "permissions": [
+    "storage",
+    "alarms",
+    "notifications",
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://web.whatsapp.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://web.whatsapp.com/*"],
+      "js": ["content/dom-utils.js", "content/message-sender.js", "content/content-script.js"],
+      "css": [],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["assets/*", "dashboard/*", "popup/*"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}
