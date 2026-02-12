@@ -11,6 +11,9 @@ const lengthMap = {
   long: "a detailed but focused paragraph",
 };
 
+/**
+ * Placeholder draft generator; returns a formatted prompt string rather than invoking an AI API.
+ */
 export async function generateDraft({ prompt, tone = "friendly", length = "short" }) {
   const safePrompt = prompt?.trim();
   if (!safePrompt) return "Please provide a prompt.";

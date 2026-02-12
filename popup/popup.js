@@ -15,7 +15,7 @@ async function sendMessage(message) {
 
 function formatTime(value) {
   const date = new Date(value);
-  return `${date.toLocaleDateString()} • ${date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}`;
+  return `${date.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" })} • ${date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}`;
 }
 
 function renderQueue() {

@@ -1,10 +1,13 @@
 (function () {
+  const TAB_PRIMARY_INPUT = "10"; // Observed tab index for main composer
+  const TAB_ALT_INPUT = "6"; // Observed alternate tab index (variant UI)
+
   function findChatInput() {
     // WhatsApp Web uses data-tab indexes for the composer; value may change over time.
     // This selector targets the main message input; review regularly for upstream DOM changes.
     return (
-      document.querySelector("[data-tab='10'] div[contenteditable='true']") ||
-      document.querySelector("[data-tab='6'] div[contenteditable='true']") ||
+      document.querySelector(`[data-tab='${TAB_PRIMARY_INPUT}'] div[contenteditable='true']`) ||
+      document.querySelector(`[data-tab='${TAB_ALT_INPUT}'] div[contenteditable='true']`) ||
       document.querySelector("div[contenteditable='true'][role='textbox']")
     );
   }
