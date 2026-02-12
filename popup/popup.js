@@ -59,6 +59,11 @@ async function handleSchedule(event, immediate = false) {
   event?.preventDefault();
   const form = qs("#schedule-form");
   const data = new FormData(form);
+  const errorEl = qs("#form-error");
+  if (errorEl) {
+    errorEl.hidden = true;
+    errorEl.textContent = "";
+  }
   const payload = {
     contact: data.get("contact"),
     message: data.get("message"),
@@ -68,7 +73,10 @@ async function handleSchedule(event, immediate = false) {
   };
 
   if (!payload.contact || !payload.message || !payload.scheduledTime) {
-    alert("Please fill in all required fields: contact, message, and schedule time.");
+    if (errorEl) {
+      errorEl.textContent = "Please fill in contact, message, and schedule time.";
+      errorEl.hidden = false;
+    }
     return;
   }
 

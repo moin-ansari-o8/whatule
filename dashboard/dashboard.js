@@ -139,7 +139,7 @@ function wireNav() {
 function wireActions() {
   qs("#ai-draft-form")?.addEventListener("submit", generateDraft);
   qs("#draft-use")?.addEventListener("click", () => {
-    alert("Draft applied. Use the popup to schedule with this content.");
+    qs("#ai-draft-status").textContent = "Draft applied. Open the popup to schedule.";
   });
   qs("#draft-dismiss")?.addEventListener("click", () => {
     state.draft = null;

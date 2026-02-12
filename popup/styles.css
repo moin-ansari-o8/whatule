@@ -210,6 +210,10 @@ button:active {
   font-size: 12px;
 }
 
+.hint--error {
+  color: #b42318;
+}
+
 .preview {
   margin-top: 8px;
   border: 1px solid rgba(18, 140, 126, 0.2);
