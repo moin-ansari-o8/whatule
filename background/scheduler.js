@@ -1,11 +1,12 @@
 import { storageManager } from "./storage-manager.js";
+import { uid } from "../lib/utils.js";
 
 const ALARM_PREFIX = "whatule-";
 
 function buildMessage(payload) {
   const now = new Date();
   const time = payload.immediate ? now : new Date(payload.scheduledTime || now);
-  const id = payload.id || `msg_${time.getTime()}`;
+  const id = payload.id || uid("msg");
   const [contactPhone, contactName] =
     payload.contact && payload.contact.startsWith("+")
       ? [payload.contact, payload.contact]
